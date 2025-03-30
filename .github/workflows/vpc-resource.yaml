@@ -25,7 +25,7 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     - name: CreateVPC
-      run: aws ec2 create-vpc --cidr-block $VPC_CIDR --region $AWS_REGION --tag-specifications ResourceType=vpc,Tags=[{Key=Name,Value=$env.VPC_NAME}]
+      run: aws ec2 create-vpc --cidr-block $VPC_CIDR --region $AWS_REGION --tag-specifications ResourceType=vpc,Tags=[{Key=Name,Value=$VPC_NAME}]
     
     
       
