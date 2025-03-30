@@ -1,1 +1,38 @@
-Hi
+name: My-first-Github-action
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    
+  workflow_dispatch:
+
+env:
+  AWS_REGION: us-east-2
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [10, 12, 14]
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: AWSConfigure
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-region: $AWS_REGION
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    - name: Test
+      run: |
+        aws sts get-caller-identity
+        echo "First go"
+        
+    
+        
+  
+  
