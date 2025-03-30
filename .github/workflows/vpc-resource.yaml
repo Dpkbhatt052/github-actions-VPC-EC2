@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 env:
-  VPC_NAME: test
+  VPC_NAME: "test"
   VPC_CIDR: 10.0.0.0/16
   AWS_REGION: ${{ vars.AWS_REGION }}
 jobs:
@@ -26,7 +26,7 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     - name: CreateVPC
       run: |
-        aws ec2 create-vpc --cidr-block 10.0.0.0/16 --tag-specifications ResourceType=vpc,Tags=[{Key=Name,Value=MyVpc}]
+        aws ec2 create-vpc --cidr-block 10.0.0.0/16 --tag-specifications ResourceType=vpc,Tags=[{Key="Name",Value=$VPC_NAME}]
     
       
     
