@@ -1,0 +1,32 @@
+name: VPC-resource
+on: 
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+  workflow_dispatch:
+
+env:
+  VPC_NAME: test
+  VPC_CIDR: 10.0.0.0/16
+  AWS_REGION: ${{ vars.AWS_REGION }}
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: development
+    steps:
+    - name: checkout
+      uses: actions/checkout@v4
+    - name: AWSConfigure
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-region: ${{ env.AWS_REGION }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    - name: CreateVPC
+      run: aws ec2 create-vpc --name --cidr-block $VPC_CIDR --region $AWS_REGION --tag-specifications ResourceType=vpc,Tags=[{Key=Name,Value=$env.VPC_NAME}]
+    
+    
+      
+    
