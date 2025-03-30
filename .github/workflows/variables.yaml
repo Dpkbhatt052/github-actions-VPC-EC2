@@ -1,0 +1,36 @@
+name: variables-workflow
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  AWS_REGION: ${{ vars.AWS_REGION }}
+
+jobs:
+  variable-job:
+    runs-on: ubuntu-latest
+    environment: development
+    strategy:
+      matrix: 
+        version: [10, 12]
+    steps:
+    - name: checkout
+      uses: actions/checkout@v4
+      
+    - name: AWSUserConfigure
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-region: ${{ env.AWS_REGION }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    - name: Test
+      run: |
+        aws sts get-caller-identity
+        aws s3 ls
+        echo $AWS_REGION # This is not under any action and hence it can be exported as is. "if" condition is inside the checkout and hence any env variable should be brought via  
+      
+  
