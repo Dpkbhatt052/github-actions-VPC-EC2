@@ -41,7 +41,6 @@ jobs:
     steps:
     - name: test
       run: |
-        echo ${{ jobs.build.env.name }}
         echo ${{ env.name }}
         
     
