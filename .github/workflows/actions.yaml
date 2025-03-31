@@ -33,7 +33,7 @@ jobs:
     - name: Test
       run: |
         aws sts get-caller-identity
-        echo "First go"
+        echo "First go to home"
 
   test:
     runs-on: ubuntu-latest
